@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/beacorder_user_table.iml" filepath="$PROJECT_DIR$/.idea/beacorder_user_table.iml" />
+      <module fileurl="file://$PROJECT_DIR$/beacorder_user_table.iml" filepath="$PROJECT_DIR$/beacorder_user_table.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/beacorder_user_table_android.iml" filepath="$PROJECT_DIR$/android/beacorder_user_table_android.iml" />
     </modules>
   </component>
 </project>

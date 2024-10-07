@@ -164,13 +164,13 @@
       "languageVersion": "3.3"
     },
     {
-      "name": "projects",
+      "name": "beacorder_user_table",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-10-07T06:32:01.344860Z",
+  "generated": "2024-10-07T07:27:21.904754Z",
   "generator": "pub",
   "generatorVersion": "3.5.1",
   "flutterRoot": "file:///C:/dev/flutter",
