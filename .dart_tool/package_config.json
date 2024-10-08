@@ -50,6 +50,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "flutter_blue_plus",
+      "rootUri": "file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_blue_plus-1.33.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-4.0.0",
       "packageUri": "lib/",
@@ -170,7 +176,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-10-07T07:27:21.904754Z",
+  "generated": "2024-10-08T06:59:35.918767Z",
   "generator": "pub",
   "generatorVersion": "3.5.1",
   "flutterRoot": "file:///C:/dev/flutter",
