@@ -124,14 +124,32 @@ class _ScanScreenState extends State<ScanScreen> {
   }
 
   List<Widget> _buildScanResultTiles(BuildContext context) {
-    return _scanResults
+
+    List<ScanResult> return_list = [];
+
+    for(int i=0; i<_scanResults.length; i++) {
+      ScanResult index_rs = _scanResults[i];
+      if(index_rs.device.platformName.contains("Border"))
+        return_list.add(index_rs);
+      else
+        continue;
+    }
+    return return_list
         .map(
-          (r) => ScanResultTile(
-            result: r,
-            onTap: () => onConnectPressed(r.device),
-          ),
-        )
-        .toList();
+        (r) => ScanResultTile(
+          result: r,
+          onTap: () => onConnectPressed(r.device),
+        ),
+    ).toList();
+
+    // return _scanResults
+    //     .map(
+    //       (r) => ScanResultTile(
+    //         result: r,
+    //         onTap: () => onConnectPressed(r.device),
+    //       ),
+    //     )
+    //     .toList();
   }
 
   @override
