@@ -26,10 +26,6 @@ fake_async
 2.12
 file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1/
 file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1/lib/
-flutter_blue_plus
-2.15
-file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_blue_plus-1.33.4/
-file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_blue_plus-1.33.4/lib/
 flutter_lints
 3.1
 file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-4.0.0/
@@ -98,6 +94,10 @@ vm_service
 3.3
 file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/vm_service-14.2.5/
 file:///C:/Users/LSY/AppData/Local/Pub/Cache/hosted/pub.dev/vm_service-14.2.5/lib/
+beacorder_user_table
+3.5
+file:///C:/beacorder-consumer-app/
+file:///C:/beacorder-consumer-app/lib/
 sky_engine
 3.2
 file:///C:/dev/flutter/bin/cache/pkg/sky_engine/
@@ -110,8 +110,4 @@ flutter_test
 3.3
 file:///C:/dev/flutter/packages/flutter_test/
 file:///C:/dev/flutter/packages/flutter_test/lib/
-beacorder_user_table
-3.5
-file:///C:/projects/beacorder_user_table/
-file:///C:/projects/beacorder_user_table/lib/
 2
