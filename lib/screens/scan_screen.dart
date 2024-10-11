@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:beacorder/dto/beacon_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
@@ -123,14 +124,39 @@ class _ScanScreenState extends State<ScanScreen> {
         .toList();
   }
 
+  List<BeaconDetail> findScanRsult(String uuid_list) {
+    List<BeaconDetail> return_list = [];
+
+    List<ScanResult> sr_list = [];
+
+    for(int i=0; i<_scanResults.length; i++) {
+      ScanResult index_rs = _scanResults[i];
+      if(index_rs.device.platformName.contains("Border"))
+        sr_list.add(index_rs);
+      else
+        continue;
+    }
+
+    for(int i=0; i<sr_list.length;i++) {
+      ScanResult index_rs = sr_list[i];
+
+
+    }
+
+    return return_list;
+  }
+
   List<Widget> _buildScanResultTiles(BuildContext context) {
 
     List<ScanResult> return_list = [];
 
     for(int i=0; i<_scanResults.length; i++) {
       ScanResult index_rs = _scanResults[i];
-      if(index_rs.device.platformName.contains("Border"))
+      if(index_rs.device.platformName.contains("Border")) {
         return_list.add(index_rs);
+        print(index_rs.device.remoteId.toString());
+      }
+
       else
         continue;
     }

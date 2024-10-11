@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:beacorder/api-service.dart';
 import 'package:beacorder/utils/Permissions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -11,10 +12,20 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'screens/bluetooth_off_screen.dart';
 import 'screens/scan_screen.dart';
 
+List<String> uuid_test_list = [];
+ApiService api = ApiService();
+
 void main() {
+  print('--------메인함수------------');
   FlutterBluePlus.setLogLevel(LogLevel.verbose, color: true);
   runApp(const FlutterBlueApp());
   requestPermission();
+
+  uuid_test_list.add('1');
+  uuid_test_list.add('2');
+  uuid_test_list.add('3');
+
+  api.getStoreInfoList(uuid_test_list);
 }
 
 //
