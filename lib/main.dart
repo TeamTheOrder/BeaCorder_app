@@ -102,8 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ShopTable(
-                    storeId: store.id,
-                    shopName: store.name,
+                    storeId: store.storeId,
+                    shopName: store.storeName,
+                    shopImg: store.examImg,
                   ),
                 ),
               );
@@ -125,15 +126,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.network(
-                    store.logoURL, // 서버에서 받은 로고 URL
-                    height: 80,
+                    store.storeImg, // 서버에서 받은 대표 이미지
+                    fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return const Text('이미지 없음');
                     },
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    store.name, // 가게 이름 표시
+                    store.storeName, // 가게 이름 표시
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ],

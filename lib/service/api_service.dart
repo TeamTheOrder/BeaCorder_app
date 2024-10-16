@@ -4,7 +4,8 @@ import '../models/menu_dto.dart';
 import '../models/store_dto.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8080/api';
+  static const String baseUrl = 'http://localhost:8080/api/v1/consumer';
+  //static const String baseUrl = 'http://192.168.137.1:8080/api/v1/consumer';
 
 
 // 가게 목록을 가져오는 함수 (UUID 리스트를 서버에 전송)
@@ -22,7 +23,6 @@ class ApiService {
       var decodedResponse = utf8.decode(response.bodyBytes);
       // 성공적으로 데이터를 받아온 경우, JSON 파싱
       List<dynamic> storeJson = json.decode(decodedResponse);
-
       // JSON 데이터를 StoreDTO 리스트로 변환
       return storeJson.map((json) => StoreDTO.fromJson(json)).toList();
     } else {
