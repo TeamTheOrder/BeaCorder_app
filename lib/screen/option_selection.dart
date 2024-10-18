@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/cart_item.dart'; // CartItem import
-import '../models/cart.dart'; // Cart import (장바구니 모델)
+import '../models/order_dto.dart'; // 주문 DTO import
+import '../service/api_service.dart'; // ApiService import
 
 class OptionSelectionScreen extends StatefulWidget {
   final int menuId;
@@ -26,7 +26,6 @@ class OptionSelectionScreen extends StatefulWidget {
 
 class _OptionSelectionScreenState extends State<OptionSelectionScreen> {
   List<Map<String, dynamic>> selectedOptions = []; // 선택된 옵션 리스트
-  Cart cart = Cart(); // 장바구니 인스턴스 (전역 관리 가정)
 
   // 옵션 선택 토글 함수
   void toggleOption(Map<String, dynamic> option) {
@@ -37,6 +36,26 @@ class _OptionSelectionScreenState extends State<OptionSelectionScreen> {
         selectedOptions.add(option);
       }
     });
+  }
+
+  // 주문 생성 함수
+  Future<void> placeOrder() async {
+    // 선택된 옵션의 ID만 추출하여 리스트로 변환
+    List<int> selectedOptionIds = selectedOptions.map((option) => option['id'] as int).toList();
+
+    // 주문 데이터를 생성
+    List<Map<String, dynamic>> orderDetails = [
+      {
+        "menu_id": widget.menuId,
+        "opt_id": selectedOptionIds,
+      },
+    ];
+
+    // API를 통해 주문 생성 요청
+    await ApiService.createOrder(widget.storeId, orderDetails.cast<Map<String, dynamic>>());
+
+    // 주문 완료 후 화면을 닫음
+    Navigator.pop(context);
   }
 
   @override
@@ -108,20 +127,13 @@ class _OptionSelectionScreenState extends State<OptionSelectionScreen> {
             ),
             const SizedBox(height: 16),
 
-            // 장바구니 추가 버튼
+            // 주문하기 버튼
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  // 장바구니에 상품 추가
-                  cart.addItem(CartItem(
-                    menuId: widget.menuId,
-                    menuName: widget.menuName,
-                    selectedOptions: selectedOptions,
-                    price: widget.oList[0]['price'], // 가격은 기본 가격만 일단 적용
-                  ));
-                  Navigator.pop(context); // 상품 추가 후 화면을 닫음
+                  placeOrder(); // 주문 생성 함수 호출
                 },
-                child: const Text('장바구니에 추가'),
+                child: const Text('주문하기'),
               ),
             ),
           ],

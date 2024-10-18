@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/menu_dto.dart';
+import '../models/order_dto.dart';
 import '../models/store_dto.dart';
 
 class ApiService {
@@ -45,6 +46,24 @@ class ApiService {
       return menuJson.map((json) => MenuDTO.fromJson(json)).toList();
     } else {
       throw Exception('메뉴를 불러오지 못했습니다.');
+    }
+  }
+  // 주문 생성 API 호출
+  static Future<void> createOrder(int storeId, List<Map<String, dynamic>> orderDetail) async {
+
+    final response = await http.post(
+      Uri.parse('$baseUrl/order/create'), // 주문 생성 엔드포인트
+      headers: {"Content-Type": "application/json"},
+      body: json.encode({
+        'store_id': storeId, // 가게 ID
+        'order_detail': orderDetail, // 주문 상세
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("주문 생성 성공");
+    } else {
+      print("주문 생성 실패: ${response.body}");
     }
   }
 }

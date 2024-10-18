@@ -210,7 +210,7 @@ class _ShopTableState extends State<ShopTable> {
           onPressed: () async {
             await placeOrder(); // 주문 생성
           },
-          child: const Text('주문하기'),
+          child: const Text(''),
         ),
       ),
     );
