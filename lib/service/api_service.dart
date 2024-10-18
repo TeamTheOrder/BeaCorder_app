@@ -4,13 +4,12 @@ import '../models/menu_dto.dart';
 import '../models/store_dto.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:8080/api/v1/consumer';
-  // static const String baseUrl = 'http://192.168.137.1:8080/api/v1/consumer';
+  // static const String baseUrl = 'http://localhost:8080/api/v1/consumer';
+  static const String baseUrl = 'http://192.168.128.111:8080/api/v1/consumer';
 
 
 // 가게 목록을 가져오는 함수 (UUID 리스트를 서버에 전송)
-  static Future<List<StoreDTO>> fetchStoreList() async {
-    final List<String> uuidList = ['1610-NORMAL-1630-HARD', '1670-NORMAL-1690-HARD']; // UUID 목록
+  static Future<List<StoreDTO>> fetchStoreList(List<String> uuidList) async {
 
     final response = await http.post(
       Uri.parse('$baseUrl/store'),
