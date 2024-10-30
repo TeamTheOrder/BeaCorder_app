@@ -52,10 +52,27 @@ class _OptionSelectionScreenState extends State<OptionSelectionScreen> {
     ];
 
     // API를 통해 주문 생성 요청
-    await ApiService.createOrder(widget.storeId, orderDetails.cast<Map<String, dynamic>>());
+    try{
+      await ApiService.createOrder(widget.storeId, orderDetails.cast<Map<String, dynamic>>());
 
-    // 주문 완료 후 화면을 닫음
-    Navigator.pop(context);
+      //스낵바 메시지
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('주문이 성공적으로 완료되었습니다.'),
+            duration: const Duration(seconds: 2),
+        )
+      );
+      // 주문 완료 후 화면을 닫음
+      Navigator.pop(context);
+    } catch(e) {
+      //스낵바 메시지
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('주문에 실패하였습니다. 잠시 후 다시 시도해주세요.'),
+            duration: const Duration(seconds: 2),
+          )
+      );
+    }
   }
 
   @override

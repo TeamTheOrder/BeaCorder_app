@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Beacoder User Page'),
+      home: const MyHomePage(title: '가게 검색'),
     );
   }
 }
@@ -79,20 +79,20 @@ class _MyHomePageState extends State<MyHomePage> {
         //   fontWeight: FontWeight.bold,
         //   fontStyle: FontStyle.italic,
         // ),
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu_outlined)),
+        // leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu_outlined)),
         iconTheme: const IconThemeData(color: Colors.brown),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        onTap: (index) {},
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle_rounded), label: 'My Page'),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Menu'),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: 0,
+      //   onTap: (index) {},
+      //   showSelectedLabels: false,
+      //   showUnselectedLabels: false,
+      //   items: const [
+      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.account_circle_rounded), label: 'My Page'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Menu'),
+      //   ],
+      // ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator()) // 로딩 중 표시
           : GridView.count(
@@ -134,13 +134,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     clipBehavior: Clip.antiAlias, // 둥근 효과 적용
                     child: Image.network(
                       store.storeImg, // 서버에서 받은 대표 이미지
+                      height: 130,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return const Text('이미지 없음');
                       },
                     ),
                   ),
-                  const SizedBox(height: 8.0),
+                  const SizedBox(height: 12.0),
                   Text(
                     store.storeName, // 가게 이름 표시
                     style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),

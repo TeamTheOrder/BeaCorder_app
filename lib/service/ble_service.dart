@@ -20,6 +20,7 @@ class BleService {
 
   // BLE 스캔 시작 및 실시간 스캔 결과를 UUIDList로 업데이트
   static Future<void> startBleScan() async {
+    uuidList.clear();
     // Bluetooth 상태 확인 후 스캔 시작
     await FlutterBluePlus.adapterState
         .where((val) => val == BluetoothAdapterState.on)
@@ -30,7 +31,7 @@ class BleService {
       withServices: [Guid("fff1")],  // 특정 서비스 UUID (fff1)를 필터링
       withNames: ["border"],         // 특정 이름 (border)로 필터링
       androidUsesFineLocation: true,
-      timeout: const Duration(seconds: 3),  // 10초간 스캔
+      timeout: const Duration(seconds: 5),  // 10초간 스캔
     );
 
     // 스캔 결과 처리 (실시간으로 스캔된 결과를 listen)

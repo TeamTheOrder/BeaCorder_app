@@ -78,7 +78,7 @@ class _ShopTableState extends State<ShopTable> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.shopName} 메뉴 목록'),
+        title: Text('메뉴 목록'),
         backgroundColor: Colors.white,
         titleTextStyle: const TextStyle(
           color: Colors.black,
@@ -204,15 +204,15 @@ class _ShopTableState extends State<ShopTable> {
         ),
       ),
       // 하단에 주문하기 버튼
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () async {
-            await placeOrder(); // 주문 생성
-          },
-          child: const Text(''),
-        ),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.all(16.0),
+      //   child: ElevatedButton(
+      //     onPressed: () async {
+      //       await placeOrder(); // 주문 생성
+      //     },
+      //     child: const Text(''),
+      //   ),
+      // ),
     );
   }
 }
