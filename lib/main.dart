@@ -134,7 +134,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     clipBehavior: Clip.antiAlias, // 둥근 효과 적용
                     child: Image.network(
                       store.storeImg, // 서버에서 받은 대표 이미지
-                      height: 130,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return const Text('이미지 없음');
