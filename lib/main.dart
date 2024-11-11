@@ -1,10 +1,92 @@
+import 'package:beacorder_user_table/service/fcm_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import './screen/shop_table.dart'; // ShopTable import
 import './service/api_service.dart'; // ApiService import
 import './service/ble_service.dart'; // BleService import
 import './models/store_dto.dart'; // StoreDTO import
 
-void main() {
+String? fcmToken;
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackGroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  String? title = message.data['title'];
+  String? body = message.data['body'];
+
+  print('백그라운드 실행');
+  FlutterLocalNotificationsPlugin().show(
+      // message.notification.hashCode,
+      // message.notification!.title,
+      // message.notification!.body,
+      0,
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'high_importance_channel',
+          'high_importance_notification',
+          importance: Importance.max,
+        ),
+      ),
+    );
+
+  //print("백그라운드 메시지 처리 ${message.data['body']}");
+}
+
+void initializeNotification() async {
+
+  final flutterLocalNotificationplugin = FlutterLocalNotificationsPlugin();
+  await flutterLocalNotificationplugin
+  .resolvePlatformSpecificImplementation<
+  AndroidFlutterLocalNotificationsPlugin>()
+  ?.createNotificationChannel(const AndroidNotificationChannel(
+      'high_importance_channel', 'high_importance_notification',
+  importance: Importance.max));
+
+  await flutterLocalNotificationplugin.initialize(
+      const InitializationSettings(
+    android: AndroidInitializationSettings("@mipmap/ic_launcher")
+  )
+  );
+
+  final token = await FirebaseMessaging.instance.getToken();
+  fcmToken = token;
+  print('Token :  $token');
+}
+
+void showFirebaseMessage(RemoteMessage message)  {
+  String? title = message.data['title'];
+  String? body = message.data['body'];
+
+  FlutterLocalNotificationsPlugin().show(
+    // message.notification.hashCode,
+    // message.notification!.title,
+    // message.notification!.body,
+    0,
+    title,
+    body,
+    const NotificationDetails(
+      android: AndroidNotificationDetails(
+        'high_importance_channel',
+        'high_importance_notification',
+        importance: Importance.max,
+      ),
+    ),
+  );
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage
+    (_firebaseMessagingBackGroundHandler);
+  initializeNotification();
+
   runApp(const MyApp());
 }
 
@@ -41,8 +123,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    FirebaseMessaging.onMessage.listen(showFirebaseMessage);
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackGroundHandler);
+
+
     startScanningAndFetchStores(); // BLE 스캔과 가게 목록 가져오는 함수 호출
-  }
+    }
+
 
   // BLE 스캔을 시작하고 UUID 리스트가 업데이트되면 서버에서 가게 목록을 가져옴
   Future<void> startScanningAndFetchStores() async {
