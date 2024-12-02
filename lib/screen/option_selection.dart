@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/order_dto.dart'; // 주문 DTO import
 import '../service/api_service.dart'; // ApiService import
+import '../main.dart';
 
 class OptionSelectionScreen extends StatefulWidget {
   final int menuId;
@@ -53,7 +54,8 @@ class _OptionSelectionScreenState extends State<OptionSelectionScreen> {
 
     // API를 통해 주문 생성 요청
     try{
-      await ApiService.createOrder(widget.storeId, orderDetails.cast<Map<String, dynamic>>());
+      String? token =  fcmToken;
+      await ApiService.createOrder(token!, widget.storeId, orderDetails.cast<Map<String, dynamic>>());
 
       //스낵바 메시지
       ScaffoldMessenger.of(context).showSnackBar(

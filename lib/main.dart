@@ -1,4 +1,3 @@
-import 'package:beacorder_user_table/service/fcm_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +138,10 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       // BLE 스캔 시작
       await BleService.startBleScan();
-
+      // BleService.uuidList = ["74278bdab64445208f0c720eaf059935",
+      // "f7a3e806f5bb43f8ba870783669ebeb9",
+      // "cbd5696feb2547e0ba3d5e9a6a7fc1f0",
+      // "e14ffe8a8ece4c3c97811e3d30d8f195"];
       // BLE 스캔 완료 후 UUID 리스트를 기반으로 서버에서 가게 목록 가져오기
       List<StoreDTO> fetchedStores = await ApiService.fetchStoreList(BleService.uuidList);
 

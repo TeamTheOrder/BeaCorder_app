@@ -45,34 +45,34 @@ class _ShopTableState extends State<ShopTable> {
   }
 
   // 주문하기 API 호출
-  Future<void> placeOrder() async {
-    List<Map<String, dynamic>> orderDetail = cart.items.map((item) {
-      return {
-        'menu_id': item.menuId,
-        'opt_id': item.selectedOptions.map((option) => option['id']).toList(),
-      };
-    }).toList();
-
-    final orderData = {
-      'store_id': widget.storeId,
-      'order_detail': orderDetail,
-    };
-
-    final response = await http.post(
-      Uri.parse('http://yourserver.com/api/order/create'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(orderData),
-    );
-
-    if (response.statusCode == 200) {
-      // 주문 성공 처리
-      print('Order placed successfully');
-      cart.clearCart(); // 주문 후 장바구니 비움
-    } else {
-      // 주문 실패 처리
-      print('Failed to place order: ${response.body}');
-    }
-  }
+  // Future<void> placeOrder() async {
+  //   List<Map<String, dynamic>> orderDetail = cart.items.map((item) {
+  //     return {
+  //       'menu_id': item.menuId,
+  //       'opt_id': item.selectedOptions.map((option) => option['id']).toList(),
+  //     };
+  //   }).toList();
+  //
+  //   final orderData = {
+  //     'store_id': widget.storeId,
+  //     'order_detail': orderDetail,
+  //   };
+  //
+  //   final response = await http.post(
+  //     Uri.parse('http://yourserver.com/api/order/create'),
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: jsonEncode(orderData),
+  //   );
+  //
+  //   if (response.statusCode == 200) {
+  //     // 주문 성공 처리
+  //     print('Order placed successfully');
+  //     cart.clearCart(); // 주문 후 장바구니 비움
+  //   } else {
+  //     // 주문 실패 처리
+  //     print('Failed to place order: ${response.body}');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

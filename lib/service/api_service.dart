@@ -49,7 +49,7 @@ class ApiService {
     }
   }
   // 주문 생성 API 호출
-  static Future<void> createOrder(int storeId, List<Map<String, dynamic>> orderDetail) async {
+  static Future<void> createOrder(String token, int storeId, List<Map<String, dynamic>> orderDetail) async {
 
     final response = await http.post(
       Uri.parse('$baseUrl/order/create'), // 주문 생성 엔드포인트
@@ -57,6 +57,7 @@ class ApiService {
       body: json.encode({
         'store_id': storeId, // 가게 ID
         'order_detail': orderDetail, // 주문 상세
+        'user_token' : token // 사용자 FCM 토큰
       }),
     );
 
