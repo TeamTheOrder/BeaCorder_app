@@ -21,7 +21,7 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final menuProvider = Provider.of<MenuProvider>(context, listen: false);
       if (menuProvider.selectedMenu != null) {
-        // 필요한 초기화 작업이 있다면 여기에 추가
+        // 필���한 초기화 작업이 있다면 여기에 추가
       }
     });
   }
@@ -253,7 +253,7 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
                     menuName: menu.name,
                     basePrice: menu.price,
                     selectedOptions: menu.oList.where((option) {
-                      return option.required == true && _selectedRequiredOptions[option.name] == option.name ||
+                      return option.required == true && _selectedRequiredOptions['required'] == option.name ||
                           _selectedOptions[option.name] == true;
                     }).toList(),
                     totalPrice: _calculateTotalPrice(menu),

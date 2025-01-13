@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/store_provider.dart';
 import '../providers/menu_provider.dart';
 import '../providers/cart_provider.dart';
+import 'cart.dart';
 import 'menu_detail.dart';
 
 class StoreMainScreen extends StatefulWidget {
@@ -171,7 +172,11 @@ class _StoreMainScreenState extends State<StoreMainScreen> {
                     minimumSize: Size(double.infinity, 60), // 버튼의 높이 조절
                   ),
                   onPressed: () {
-                    // 장바구니 보기 화면으로 이동하는 로직 추가
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => CartScreen(),
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
