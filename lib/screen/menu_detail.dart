@@ -30,7 +30,7 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
     int totalPrice = menu.price;
 
     menu.oList.forEach((option) {
-      if (option.required == true && _selectedRequiredOptions[option.type] == option.name) {
+      if (option.required == true && _selectedRequiredOptions[option.name] == option.name) {
         totalPrice += option.price;
       } else if (_selectedOptions[option.name] == true) {
         totalPrice += option.price;
@@ -160,10 +160,10 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
                                     children: [
                                       Radio<String>(
                                         value: option.name,
-                                        groupValue: _selectedRequiredOptions[option.type],
+                                        groupValue: _selectedRequiredOptions['required'],
                                         onChanged: (String? value) {
                                           setState(() {
-                                            _selectedRequiredOptions[option.type] = value!;
+                                            _selectedRequiredOptions['required'] = value!;
                                           });
                                         },
                                       ),
@@ -253,7 +253,7 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
                     menuName: menu.name,
                     basePrice: menu.price,
                     selectedOptions: menu.oList.where((option) {
-                      return option.required == true && _selectedRequiredOptions[option.type] == option.name ||
+                      return option.required == true && _selectedRequiredOptions[option.name] == option.name ||
                           _selectedOptions[option.name] == true;
                     }).toList(),
                     totalPrice: _calculateTotalPrice(menu),

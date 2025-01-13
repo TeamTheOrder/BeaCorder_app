@@ -25,7 +25,7 @@ class MenuDTO {
       name: json['name'],
       price: json['price'],
       menuImg: json['menuImg'],
-      description: json['description'],
+      description: json['description'] ?? '메뉴 소개',
       oList: (json['o_list'] as List).map((i) => OptionDTO.fromJson(i)).toList(),
       storeId: json['store_id'],
     );

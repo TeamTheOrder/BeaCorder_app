@@ -177,17 +177,21 @@ class _StoreMainScreenState extends State<StoreMainScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('$totalCartPrice원 '),
-                      Icon(Icons.shopping_cart),
+                      Text('●', style: TextStyle(fontSize: 20, color: Colors.white)),
                       SizedBox(width: 8.0),
-                      CircleAvatar(
-                        radius: 10,
-                        backgroundColor: Colors.white,
-                        child: Text(
-                          '$cartItemCount',
-                          style: TextStyle(fontSize: 12, color: Colors.cyan),
+                      Text('장바구니 보기'),
+                      SizedBox(width: 8.0),
+                      Transform.translate(
+                        offset: Offset(0, 3), // y축으로 2픽셀 내리기
+                        child: CircleAvatar(
+                          radius: 12, // 크기 조정
+                          backgroundColor: Colors.white,
+                          child: Text(
+                            '$cartItemCount',
+                            style: TextStyle(fontSize: 15, color: Colors.cyan), // 폰트 크기 조정
+                          ),
                         ),
                       ),
-                      Text(' 장바구니 보기'),
                     ],
                   ),
                 ),
