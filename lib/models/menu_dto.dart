@@ -1,16 +1,22 @@
+import 'option_dto.dart';
+
 class MenuDTO {
   final int id;
   final String name;
   final int price;
   final String menuImg;
-  final List<Map<String, dynamic>> oList; // 옵션 리스트 필드 추가
+  final String? description;
+  final List<OptionDTO> oList;
+  final int storeId;
 
   MenuDTO({
     required this.id,
     required this.name,
     required this.price,
     required this.menuImg,
-    required this.oList
+    this.description,
+    required this.oList,
+    required this.storeId,
   });
 
   factory MenuDTO.fromJson(Map<String, dynamic> json) {
@@ -19,8 +25,9 @@ class MenuDTO {
       name: json['name'],
       price: json['price'],
       menuImg: json['menuImg'],
-      // oList 필드를 JSON 배열에서 변환하여 처리
-      oList: List<Map<String, dynamic>>.from(json['o_list'] ?? []), // JSON 배열을 List<Map<String, dynamic>>로 변환
+      description: json['description'],
+      oList: (json['o_list'] as List).map((i) => OptionDTO.fromJson(i)).toList(),
+      storeId: json['store_id'],
     );
   }
 }

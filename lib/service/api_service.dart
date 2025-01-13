@@ -1,12 +1,11 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/menu_dto.dart';
-import '../models/order_dto.dart';
 import '../models/store_dto.dart';
 
 class ApiService {
-  // static const String baseUrl = 'http://localhost:8080/api/v1/consumer';
-  static const String baseUrl = 'http://192.168.137.1:8080/api/v1/consumer';
+  static const String baseUrl = 'http://10.0.2.2:8080/api/v1/consumer';
+  // static const String baseUrl = 'http://192.168.137.1:8080/api/v1/consumer';
 
 
 // 가게 목록을 가져오는 함수 (UUID 리스트를 서버에 전송)

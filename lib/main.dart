@@ -1,11 +1,16 @@
+import 'package:beacorder_user_table/providers/cart_provider.dart';
+import 'package:beacorder_user_table/providers/menu_provider.dart';
+import 'package:beacorder_user_table/providers/store_provider.dart';
+import 'package:beacorder_user_table/screen/menu_detail.dart';
+import 'package:beacorder_user_table/screen/store_main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import './screen/shop_table.dart'; // ShopTable import
 import './service/api_service.dart'; // ApiService import
 import './service/ble_service.dart'; // BleService import
 import './models/store_dto.dart'; // StoreDTO import
+import 'package:provider/provider.dart';
 
 String? fcmToken;
 
@@ -94,14 +99,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Beacorder',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => StoreProvider()),
+        ChangeNotifierProvider(create: (context) => MenuProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+        // StoreProvider 추가
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.brown,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const MyHomePage(title: 'Nearby Stores'),
+          '/menu_detail': (context) => MenuDetailScreen(),
+          '/store_main': (context) => StoreMainScreen(),
+        },
       ),
-      home: const MyHomePage(title: '가게 검색'),
     );
   }
 }
@@ -114,6 +130,7 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+
 
 class _MyHomePageState extends State<MyHomePage> {
   bool isLoading = true;
@@ -137,11 +154,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     try {
       // BLE 스캔 시작
-      await BleService.startBleScan();
-      // BleService.uuidList = ["74278bdab64445208f0c720eaf059935",
-      // "f7a3e806f5bb43f8ba870783669ebeb9",
-      // "cbd5696feb2547e0ba3d5e9a6a7fc1f0",
-      // "e14ffe8a8ece4c3c97811e3d30d8f195"];
+      // await BleService.startBleScan();
+      BleService.uuidList = ["74278bdab64445208f0c720eaf059935",
+      "f7a3e806f5bb43f8ba870783669ebeb9",
+      "cbd5696feb2547e0ba3d5e9a6a7fc1f0",
+      "e14ffe8a8ece4c3c97811e3d30d8f195"];
       // BLE 스캔 완료 후 UUID 리스트를 기반으로 서버에서 가게 목록 가져오기
       List<StoreDTO> fetchedStores = await ApiService.fetchStoreList(BleService.uuidList);
 
@@ -192,15 +209,13 @@ class _MyHomePageState extends State<MyHomePage> {
           final store = stores[index];
           return GestureDetector(
             onTap: () {
+              final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+              storeProvider.setSelectedStore(store);
               // 가게 ID를 ShopTable로 전달
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ShopTable(
-                    storeId: store.storeId,
-                    shopName: store.storeName,
-                    shopImg: store.examImg,
-                  ),
+                  builder: (context) => StoreMainScreen(),
                 ),
               );
             },
