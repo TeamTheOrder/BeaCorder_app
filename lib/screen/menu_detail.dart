@@ -254,6 +254,7 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
                 onPressed: () {
                   final cartProvider = Provider.of<CartProvider>(context, listen: false);
                   final cartItem = CartDTO(
+                    menuId: menu.id,
                     menuImg: menu.menuImg,
                     menuName: menu.name,
                     basePrice: menu.price,

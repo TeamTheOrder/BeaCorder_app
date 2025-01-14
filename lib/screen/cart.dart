@@ -1,7 +1,10 @@
+// lib/screen/cart.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/cart_dto.dart';
 import '../providers/cart_provider.dart';
+import '../providers/menu_provider.dart';
+import '../providers/store_provider.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -144,7 +147,22 @@ class _CartScreenState extends State<CartScreen> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                // 결제 화면으로 이동하는 로직 추가
+                final menuProvider = Provider.of<MenuProvider>(context, listen: false);
+                final storeProvider = Provider.of<StoreProvider>(context, listen: false);
+                menuProvider.createOrder(storeProvider.selectedStore!.storeId, cartItems); // storeId는 예시로 1을 사용
+
+                // 주문 생성 후 장바구니 비우기
+                cartProvider.clearCart();
+
+                // 주문 생성 완료 메시지
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('주문이 생성되었습니다!'),
+                  ),
+                );
+
+                // store_main으로 돌아가기
+                Navigator.of(context).pushNamedAndRemoveUntil('/store_main', (Route<dynamic> route) => false);
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white, backgroundColor: Colors.cyan, // 폰트 컬러 흰색, 배경색 진한 파란색

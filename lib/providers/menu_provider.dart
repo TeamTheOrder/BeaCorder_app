@@ -1,8 +1,9 @@
 // lib/providers/menu_provider.dart
-import 'package:beacorder_user_table/main.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
 import '../models/menu_dto.dart';
 import '../service/api_service.dart';
+import '../models/cart_dto.dart';
 
 class MenuProvider with ChangeNotifier {
   List<MenuDTO> _menus = [];
@@ -35,7 +36,7 @@ class MenuProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createOrder(int storeId, List<Map<String, dynamic>> orderDetail) async {
+  Future<void> createOrder(int storeId, List<CartDTO> cartItems) async {
     _isLoading = true;
     _errorMessage = '';
     notifyListeners();
@@ -43,6 +44,7 @@ class MenuProvider with ChangeNotifier {
     String? token = fcmToken;
 
     try {
+      List<Map<String, dynamic>> orderDetail = _convertToOrderDetail(cartItems);
       await ApiService.createOrder(token!, storeId, orderDetail);
     } catch (e) {
       _errorMessage = '주문을 생성하지 못했습니다: $e';
@@ -50,5 +52,15 @@ class MenuProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  List<Map<String, dynamic>> _convertToOrderDetail(List<CartDTO> cartItems) {
+    return cartItems.map((item) {
+      return {
+        'menu_id': item.menuId,
+        'opt_id': item.selectedOptions.map((option) => option.id).toList(),
+        'quantity': item.quantity,
+      };
+    }).toList();
   }
 }

@@ -1,6 +1,7 @@
 import 'option_dto.dart';
 
 class CartDTO {
+  final int menuId;
   final String menuImg;
   final String menuName;
   final int basePrice;
@@ -9,6 +10,7 @@ class CartDTO {
   int quantity; // 수량 변수 추가
 
   CartDTO({
+    required this.menuId,
     required this.menuImg,
     required this.menuName,
     required this.basePrice,
