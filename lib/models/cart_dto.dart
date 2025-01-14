@@ -6,6 +6,7 @@ class CartDTO {
   final int basePrice;
   final List<OptionDTO> selectedOptions;
   final int totalPrice;
+  int quantity; // 수량 변수 추가
 
   CartDTO({
     required this.menuImg,
@@ -13,5 +14,6 @@ class CartDTO {
     required this.basePrice,
     required this.selectedOptions,
     required this.totalPrice,
+    this.quantity = 1, // 기본 수량을 1로 설정
   });
 }

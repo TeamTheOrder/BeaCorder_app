@@ -2,14 +2,14 @@ class OptionDTO {
   final int id;
   final String name;
   final int price;
-  final bool? required;
+  final bool required;
   final int storeId;
 
   OptionDTO({
     required this.id,
     required this.name,
     required this.price,
-    this.required,
+    required this.required,
     required this.storeId,
   });
 

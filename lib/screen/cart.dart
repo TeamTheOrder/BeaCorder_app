@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/cart_dto.dart';
 import '../providers/cart_provider.dart';
 
 class CartScreen extends StatefulWidget {
@@ -8,19 +9,23 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final cartProvider = Provider.of<CartProvider>(context, listen: false);
-      final cartItems = cartProvider.cartItems;
-      for (var item in cartItems) {
-        print('메뉴: ${item.menuName}, 기본 가격: ${item.basePrice}원, 총 가격: ${item.totalPrice}원');
-        for (var option in item.selectedOptions) {
-          print('옵션: ${option.name}, 가격: ${option.price}원');
-        }
+
+  void _updateQuantity(CartDTO item, int delta) {
+    setState(() {
+      item.quantity += delta;
+      if (item.quantity < 1) {
+        item.quantity = 1;
       }
     });
+  }
+
+  void _removeItem(CartDTO item) {
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    cartProvider.removeFromCart(item);
+    if (cartProvider.cartItems.isEmpty) {
+      Navigator.of(context).pop();
+      Navigator.of(context).pushNamedAndRemoveUntil('/store_main', (Route<dynamic> route) => false);
+    }
   }
 
   @override
@@ -48,28 +53,91 @@ class _CartScreenState extends State<CartScreen> {
           ),
           SizedBox(height: 16.0),
           ...cartItems.map((item) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                  leading: Image.network(item.menuImg, width: 50, height: 50, fit: BoxFit.cover),
-                  title: Text(item.menuName),
-                  subtitle: Text('${item.basePrice}원'),
-                  trailing: Text('${item.totalPrice}원'),
-                ),
-                ...item.selectedOptions.map((option) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(option.name),
-                        Text('${option.price}원'),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ],
+            return Container(
+              margin: EdgeInsets.only(bottom: 16.0),
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: Colors.grey[300]!),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(item.menuName,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                            SizedBox(height: 10,),
+                            ...item.selectedOptions.map((option) {
+                              return Text(
+                                  '${option.required ? '필수 옵션' : '추가 옵션'} : ${option.name} ${option.required ? '' : '(${option.price}원)'}',
+                                  style: TextStyle(color: Colors.grey));
+                            }).toList(),
+                            Text('가격 : ${item.basePrice}원',
+                                style: TextStyle(color: Colors.grey)),
+                          ],
+                        ),
+                      ),
+                      Image.network(item.menuImg,
+                          width: 50, height: 50, fit: BoxFit.cover),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('${item.totalPrice}원',
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: Colors.grey[300]!),
+                        ),
+                        child: Row(
+                          children: [
+                            item.quantity > 1
+                                ? IconButton(
+                              icon: Icon(Icons.remove),
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              onPressed: () {
+                                _updateQuantity(item, -1);
+                                setState(() {});
+                              },
+                            )
+                                : IconButton(
+                              icon: Icon(Icons.delete),
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              onPressed: () {
+                                _removeItem(item);
+                                setState(() {});
+                              },
+                            ),
+                            Text('${item.quantity}'),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              onPressed: () {
+                                _updateQuantity(item, 1);
+                                setState(() {});
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             );
           }).toList(),
           SizedBox(height: 16.0),
@@ -79,9 +147,22 @@ class _CartScreenState extends State<CartScreen> {
                 // 결제 화면으로 이동하는 로직 추가
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.cyan, // 폰트 컬러 cyan
+                foregroundColor: Colors.white, backgroundColor: Colors.cyan, // 폰트 컬러 흰색, 배경색 진한 파란색
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0), // 모서리를 살짝 둥글게
+                ),
+                textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w500), // 폰트 크기 키우기
+                minimumSize: Size(double.infinity, 60), // 버튼의 높이 조절
               ),
-              child: Text('결제하기'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('${cartItems.fold(0, (sum, item) => sum + item.totalPrice * item.quantity)}원 '),
+                  Text('●', style: TextStyle(fontSize: 20, color: Colors.white)),
+                  SizedBox(width: 8.0),
+                  Text('결제하기'),
+                ],
+              ),
             ),
           ),
         ],

@@ -21,7 +21,7 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final menuProvider = Provider.of<MenuProvider>(context, listen: false);
       if (menuProvider.selectedMenu != null) {
-        // 필���한 초기화 작업이 있다면 여기에 추가
+        // 필요한 초기화 작업이 있다면 여기에 추가
       }
     });
   }
@@ -58,6 +58,9 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
         ),
       );
     }
+
+    final requiredOptions = menu.oList.where((option) => option.required == true).toList();
+    final additionalOptions = menu.oList.where((option) => option.required != true).toList();
 
     return Scaffold(
       body: Stack(
@@ -135,96 +138,98 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '필수 옵션',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          ...menu.oList.where((option) => option.required == true).map((OptionDTO option) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Radio<String>(
-                                        value: option.name,
-                                        groupValue: _selectedRequiredOptions['required'],
-                                        onChanged: (String? value) {
-                                          setState(() {
-                                            _selectedRequiredOptions['required'] = value!;
-                                          });
-                                        },
-                                      ),
-                                      SizedBox(width: 8.0),
-                                      Text(option.name, style: TextStyle(fontSize: 16)),
-                                    ],
-                                  ),
-                                  Text('${option.price}원', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '추가 옵션',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          ...menu.oList.where((option) => option.required != true).map((OptionDTO option) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Transform.scale(
-                                        scale: 1.2,
-                                        child: Checkbox(
-                                          value: _selectedOptions[option.name] ?? false,
-                                          onChanged: (bool? value) {
+                    if (requiredOptions.isNotEmpty)
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '필수 옵션',
+                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            ...requiredOptions.map((OptionDTO option) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Radio<String>(
+                                          value: option.name,
+                                          groupValue: _selectedRequiredOptions['required'],
+                                          onChanged: (String? value) {
                                             setState(() {
-                                              _selectedOptions[option.name] = value ?? false;
+                                              _selectedRequiredOptions['required'] = value!;
                                             });
                                           },
                                         ),
-                                      ),
-                                      SizedBox(width: 8.0),
-                                      Text(option.name, style: TextStyle(fontSize: 16)),
-                                    ],
-                                  ),
-                                  Text('${option.price}원', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ],
+                                        SizedBox(width: 8.0),
+                                        Text(option.name, style: TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                    Text('${option.price}원', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ],
+                        ),
                       ),
-                    ),
+                    if (additionalOptions.isNotEmpty)
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '추가 옵션',
+                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            ...additionalOptions.map((OptionDTO option) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Transform.scale(
+                                          scale: 1.2,
+                                          child: Checkbox(
+                                            value: _selectedOptions[option.name] ?? false,
+                                            onChanged: (bool? value) {
+                                              setState(() {
+                                                _selectedOptions[option.name] = value ?? false;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.0),
+                                        Text(option.name, style: TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                    Text('${option.price}원', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
