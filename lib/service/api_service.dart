@@ -41,7 +41,6 @@ class ApiService {
 
       // JSON 데이터를 받아서 MenuDTO 리스트로 변환
       List<dynamic> menuJson = json.decode(decodedResponse);
-      print(menuJson);
       return menuJson.map((json) => MenuDTO.fromJson(json)).toList();
     } else {
       throw Exception('메뉴를 불러오지 못했습니다.');
