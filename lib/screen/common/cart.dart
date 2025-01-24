@@ -1,10 +1,10 @@
 // lib/screen/cart.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/cart_dto.dart';
-import '../providers/cart_provider.dart';
-import '../providers/menu_provider.dart';
-import '../providers/store_provider.dart';
+import '../../models/cart_dto.dart';
+import '../../providers/cart_provider.dart';
+import '../../providers/menu_provider.dart';
+import '../../providers/store_provider.dart';
 
 class CartScreen extends StatefulWidget {
   @override
