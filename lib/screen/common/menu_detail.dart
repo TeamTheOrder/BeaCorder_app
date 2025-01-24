@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/cart_dto.dart';
-import '../providers/cart_provider.dart';
-import '../providers/menu_provider.dart';
-import '../models/menu_dto.dart';
-import '../models/option_dto.dart';
+import '../../models/cart_dto.dart';
+import '../../providers/cart_provider.dart';
+import '../../providers/menu_provider.dart';
+import '../../models/menu_dto.dart';
+import '../../models/option_dto.dart';
 
 class MenuDetailScreen extends StatefulWidget {
   @override

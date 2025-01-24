@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
-import 'order_progress_screen.dart';
-import 'order_history_screen.dart';
-import 'my_page_screen.dart';
+import 'home/home_screen.dart';
+import 'order/order_progress_screen.dart';
+import 'order/order_history_screen.dart';
+import 'user/my_page_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
