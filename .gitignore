@@ -1,0 +1,46 @@
+# 환경 변수 파일
+.env
+setting.env
+
+# Flutter 관련 빌드 파일
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+*.flutter-plugins
+*.flutter-plugins-dependencies
+
+# iOS 관련 파일
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/DerivedData/
+ios/.symlinks/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.podspec
+
+# Android 관련 파일
+android/.gradle/
+android/app/build/
+android/local.properties
+android/key.properties
+
+# VSCode 설정 파일
+.vscode/
+
+# macOS 관련 파일
+*.DS_Store
+
+# 기타
+*.log
+*.lock
+*.bak
+*.swp
+*.tmp
+*.idea/
+*.iml
+*.jks

@@ -1,0 +1,1 @@
+ /Users/daelimci00018/StudioProjects/BeaCorder_app/.dart_tool/flutter_build/74e3cf083331dd4f6c6212b2639a4052/native_assets.yaml: 

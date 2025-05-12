@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "386914936144",
+    "project_id": "beacorder",
+    "storage_bucket": "beacorder.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386914936144:android:5e358500018fe9f2043855",
+        "android_client_info": {
+          "package_name": "com.soha.beacorder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1pHa9oLuYxiNkfZiPHp-kLg_VZR5tWXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386914936144:android:c1ac9c0583f9e85e043855",
+        "android_client_info": {
+          "package_name": "com.soha.beacorder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1pHa9oLuYxiNkfZiPHp-kLg_VZR5tWXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
