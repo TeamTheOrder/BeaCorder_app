@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:beacorder_user_table/screen/user/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -81,13 +83,13 @@ void showFirebaseMessage(RemoteMessage message) {
 }
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "assets/setting.env");
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackGroundHandler);
   initializeNotification();
-  KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_KEY']!);
+  KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']!);
   runApp(const MyApp());
 }
 

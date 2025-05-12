@@ -1,6 +1,6 @@
 # 환경 변수 파일
 .env
-setting.env
+assets/setting.env
 
 # Flutter 관련 빌드 파일
 build/
@@ -44,3 +44,4 @@ android/key.properties
 *.idea/
 *.iml
 *.jks
+.dart_tool/flutter_build/
