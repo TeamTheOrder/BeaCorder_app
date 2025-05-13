@@ -270,6 +270,7 @@ class _MenuDetailScreenState extends State<MenuDetailScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('장바구니에 담겼습니다!'),
+                      duration: Duration(milliseconds: 600),
                     ),
                   );
 

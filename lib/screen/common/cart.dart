@@ -55,122 +55,125 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
           SizedBox(height: 16.0),
-          ...cartItems.map((item) {
-            return Container(
-              margin: EdgeInsets.only(bottom: 16.0),
-              padding: EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: Colors.grey[300]!),
-              ),
+          Expanded(
+            child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
+                children: cartItems.map((item) {
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 16.0),
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: Colors.grey[300]!),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item.menuName,
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold)),
-                            SizedBox(height: 10,),
-                            ...item.selectedOptions.map((option) {
-                              return Text(
-                                  '${option.required ? '필수 옵션' : '추가 옵션'} : ${option.name} ${option.required ? '' : '(${option.price}원)'}',
-                                  style: TextStyle(color: Colors.grey));
-                            }).toList(),
-                            Text('가격 : ${item.basePrice}원',
-                                style: TextStyle(color: Colors.grey)),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(item.menuName,
+                                      style: TextStyle(
+                                          fontSize: 15, fontWeight: FontWeight.bold)),
+                                  SizedBox(height: 10,),
+                                  ...item.selectedOptions.map((option) {
+                                    return Text(
+                                        '${option.required ? '필수 옵션' : '추가 옵션'} : ${option.name} ${option.required ? '' : '(${option.price}원)'}',
+                                        style: TextStyle(color: Colors.grey));
+                                  }).toList(),
+                                  Text('가격 : ${item.basePrice}원',
+                                      style: TextStyle(color: Colors.grey)),
+                                ],
+                              ),
+                            ),
+                            Image.network(item.menuImg,
+                                width: 50, height: 50, fit: BoxFit.cover),
                           ],
                         ),
-                      ),
-                      Image.network(item.menuImg,
-                          width: 50, height: 50, fit: BoxFit.cover),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('${item.totalPrice}원',
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: Colors.grey[300]!),
-                        ),
-                        child: Row(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            item.quantity > 1
-                                ? IconButton(
-                              icon: Icon(Icons.remove),
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              onPressed: () {
-                                _updateQuantity(item, -1);
-                                setState(() {});
-                              },
-                            )
-                                : IconButton(
-                              icon: Icon(Icons.delete),
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              onPressed: () {
-                                _removeItem(item);
-                                setState(() {});
-                              },
-                            ),
-                            Text('${item.quantity}'),
-                            IconButton(
-                              icon: Icon(Icons.add),
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              onPressed: () {
-                                _updateQuantity(item, 1);
-                                setState(() {});
-                              },
+                            Text('${item.totalPrice}원',
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: Colors.grey[300]!),
+                              ),
+                              child: Row(
+                                children: [
+                                  item.quantity > 1
+                                      ? IconButton(
+                                    icon: Icon(Icons.remove),
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
+                                    onPressed: () {
+                                      _updateQuantity(item, -1);
+                                      setState(() {});
+                                    },
+                                  )
+                                      : IconButton(
+                                    icon: Icon(Icons.delete),
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
+                                    onPressed: () {
+                                      _removeItem(item);
+                                      setState(() {});
+                                    },
+                                  ),
+                                  Text('${item.quantity}'),
+                                  IconButton(
+                                    icon: Icon(Icons.add),
+                                    padding: EdgeInsets.zero,
+                                    constraints: BoxConstraints(),
+                                    onPressed: () {
+                                      _updateQuantity(item, 1);
+                                      setState(() {});
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  );
+                }).toList(),
               ),
-            );
-          }).toList(),
+            ),
+          ),
           SizedBox(height: 16.0),
           Center(
             child: ElevatedButton(
               onPressed: () {
                 final menuProvider = Provider.of<MenuProvider>(context, listen: false);
                 final storeProvider = Provider.of<StoreProvider>(context, listen: false);
-                menuProvider.createOrder(storeProvider.selectedStore!.storeId, cartItems); // storeId는 예시로 1을 사용
+                menuProvider.createOrder(storeProvider.selectedStore!.storeId, cartItems);
 
-                // 주문 생성 후 장바구니 비우기
                 cartProvider.clearCart();
 
-                // 주문 생성 완료 메시지
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('주문이 생성되었습니다!'),
                   ),
                 );
 
-                // store_main으로 돌아가기
                 Navigator.of(context).pushNamedAndRemoveUntil('/store_main', (Route<dynamic> route) => false);
               },
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.cyan, // 폰트 컬러 흰색, 배경색 진한 파란색
+                foregroundColor: Colors.white, backgroundColor: Colors.cyan,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0), // 모서리를 살짝 둥글게
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w500), // 폰트 크기 키우기
-                minimumSize: Size(double.infinity, 60), // 버튼의 높이 조절
+                textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                minimumSize: Size(double.infinity, 60),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
