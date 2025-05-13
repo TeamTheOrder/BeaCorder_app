@@ -84,6 +84,7 @@ class KakaoProvider {
     await prefs.setString('token', token);
     await prefs.setString('phoneNumber', phoneNumber);
     await prefs.setString('loginType', loginType); // 로그인 타입 저장
+    await prefs.setBool('isLoggedIn', true); // 로그인 여부 저장
   }
 
   Future<void> saveGuestUserInfo() async {
@@ -96,6 +97,7 @@ class KakaoProvider {
     await prefs.setString('token', 'guest_token');
     await prefs.setString('phoneNumber', 'unknown');
     await prefs.setString('loginType', 'guest'); // 로그인 타입: 게스트
+    await prefs.setBool('isLoggedIn', true); // 로그인 여부 저장
   }
 
   Future<Map<String, String?>> getUserInfoFromPrefs() async {
@@ -110,10 +112,5 @@ class KakaoProvider {
       'phoneNumber': prefs.getString('phoneNumber'),
       'loginType': prefs.getString('loginType'), // 로그인 타입 반환
     };
-  }
-
-  Future<bool> isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token') != null;
   }
 }

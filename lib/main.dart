@@ -8,15 +8,13 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/cart_provider.dart';
 import 'providers/menu_provider.dart';
 import 'providers/store_provider.dart';
 import 'screen/main_screen.dart';
 import 'screen/common/menu_detail.dart';
 import 'screen/home/store_main.dart';
-import 'service/api_service.dart';
-import 'service/ble_service.dart';
-import 'models/store_dto.dart';
 
 String? fcmToken;
 
@@ -90,11 +88,17 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackGroundHandler);
   initializeNotification();
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']!);
-  runApp(const MyApp());
+  // 로컬 스토리지에서 유저 정보 확인
+  final prefs = await SharedPreferences.getInstance();
+  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +109,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CartProvider()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: '비코더',
         theme: ThemeData(
           primarySwatch: Colors.cyan,
           bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -114,7 +118,7 @@ class MyApp extends StatelessWidget {
             unselectedItemColor: Colors.white70,
           ),
         ),
-        home: LoginScreen(),
+        home: isLoggedIn ? MainScreen() : LoginScreen(),
         routes: {
           '/main': (context) => MainScreen(),
           '/menu_detail': (context) => MenuDetailScreen(),
