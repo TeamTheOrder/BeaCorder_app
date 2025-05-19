@@ -79,7 +79,7 @@ class KakaoProvider {
     await prefs.setString('id', id);
     await prefs.setString('name', name);
     await prefs.setString('nickname', nickname);
-    await prefs.setString('gender', gender);
+    await  prefs.setString('gender', gender);
     await prefs.setString('ageRange', ageRange);
     await prefs.setString('token', token);
     await prefs.setString('phoneNumber', phoneNumber);
