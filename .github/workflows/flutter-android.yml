@@ -3,7 +3,6 @@ name: Build APK on Push
 on:
   push:
     branches:
-      - main
       - dev_main  # 필요 시 다른 브랜치도 추가하세요
 
 jobs:
