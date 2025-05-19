@@ -16,7 +16,7 @@ class ApiService {
         // 요청 전에 토큰을 추가
         String? token = await _tokenService.getAccessToken();
         if (token != null) {
-          options.headers['Authorization'] = 'Bearer $token';
+          options.headers['access_token'] = token;
         }
         return handler.next(options);
       },
