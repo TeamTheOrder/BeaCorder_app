@@ -24,6 +24,7 @@ class KakaoProvider {
         'gender': user.kakaoAccount?.gender?.toString() ?? '',
         'ageRange': user.kakaoAccount?.ageRange?.toString() ?? '',
         'phoneNumber': user.kakaoAccount?.phoneNumber ?? '',
+        'loginType': 'kakao', // 로그인 타입: 카카오
       };
 
       // ApiService의 kakaoLogin 호출
@@ -53,7 +54,7 @@ class KakaoProvider {
           'gender': guestInfo['gender'] ?? 'unknown',
           'ageRange': guestInfo['ageRange'] ?? 'unknown',
           'phoneNumber': guestInfo['phoneNumber'] ?? 'unknown',
-          'loginType' : 'guest'
+          'loginType' : guestInfo['loginType'] ?? 'guest', // 로그인 타입: 게스트
         });
         print('게스트 로그인 성공: ${guestInfo['id']}');
       } else {
