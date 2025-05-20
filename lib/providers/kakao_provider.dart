@@ -53,6 +53,7 @@ class KakaoProvider {
           'gender': guestInfo['gender'] ?? 'unknown',
           'ageRange': guestInfo['ageRange'] ?? 'unknown',
           'phoneNumber': guestInfo['phoneNumber'] ?? 'unknown',
+          'loginType' : 'guest'
         });
         print('게스트 로그인 성공: ${guestInfo['id']}');
       } else {

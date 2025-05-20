@@ -1,6 +1,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TokenService {
+  static final TokenService _instance = TokenService._internal();
+  factory TokenService() => _instance;
+  TokenService._internal();
+
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   // Access 토큰 저장

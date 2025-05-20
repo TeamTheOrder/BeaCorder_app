@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import '../models/menu_dto.dart';
@@ -6,7 +7,7 @@ import '../models/store_dto.dart';
 import 'token_service.dart';
 
 class ApiService {
-  final String baseUrl = dotenv.env['API_BASE_URL'] ?? 'http://10.0.2.2:8000/api/v1/consumer';
+  final String baseUrl = dotenv.env['API_BASE_URL_DEV'] ?? 'http://10.0.2.2:8000/api/v1/consumer';
   final TokenService _tokenService = TokenService();
   final Dio _dio = Dio();
 
