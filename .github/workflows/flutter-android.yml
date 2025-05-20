@@ -1,31 +1,36 @@
-name: Build APK on Push
+name: Build Flutter APK
 
 on:
   push:
     branches:
-      - dev_main  # 필요 시 다른 브랜치도 추가하세요
+      - dev-main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v3
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.2'  # 현재 사용하는 Flutter 버전
+          flutter-version: '3.24.2' # 사용 중인 버전에 맞게 수정
 
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Generate setting.env from secret
+        run: |
+          mkdir -p assets
+          echo "${{ secrets.SETTING_ENV }}" > assets/setting.env
+
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK as Artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
         with:
-          name: app-release-apk
+          name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
