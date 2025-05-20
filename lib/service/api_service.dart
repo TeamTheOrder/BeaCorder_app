@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'dart:convert';
 import '../models/menu_dto.dart';
 import '../models/store_dto.dart';
 import 'token_service.dart';
