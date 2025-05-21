@@ -3,7 +3,7 @@ name: Build Flutter APK
 on:
   push:
     branches:
-      - dev_main
+      - dev_main  # 실제 브랜치 이름 확인!
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6' # 사용 중인 버전에 맞게 수정
+          flutter-version: '3.24.2'
 
       - name: Install dependencies
         run: flutter pub get
@@ -30,7 +30,7 @@ jobs:
         run: flutter build apk --release
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.3
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
